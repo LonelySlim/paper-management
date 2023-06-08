@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pm.papermanagement.mapper.PaperLibraryMapper">
+    <resultMap id="paper_library_map" type="com.pm.papermanagement.common.entity.PaperLibrary">
+        <id column="id" property="id"/>
+        <result column="topic" property="topic"/>
+        <result column="desc" property="desc"/>
+        <result column="is_public" property="isPublic"/>
+    </resultMap>
+
+    <insert id="addPaperLibrary">
+        insert into paper_library(topic, `desc`, is_public)
+        values (#{topic}, #{desc}, #{is_public})
+    </insert>
+
+    <select id="selectPaperLibraryByTopic" resultMap="paper_library_map">
+        select *
+        from paper_management.paper_library
+        where topic = #{topic};
+    </select>
+
+    <select id="selectPaperLibraryById" resultMap="paper_library_map">
+        select *
+        from paper_management.paper_library
+        where id = #{library_id};
+    </select>
+
+    <select id="selectPaperLibraryBySequence" resultMap="paper_library_map">
+        select *
+        from paper_management.paper_library
+        limit #{start} , #{offset};
+    </select>
+
+    <select id="selectPaperLibraryBySequenceAndTopic" resultMap="paper_library_map">
+        select *
+        from paper_management.paper_library
+        where topic = #{topic}
+        limit #{start} , #{offset};
+    </select>
+
+    <update id="modifyTopicById">
+        update paper_library
+        set topic = #{topic}
+        where id = #{library_id}
+    </update>
+
+    <delete id="deletePaperLibraryById">
+        delete from paper_library
+        where id = #{library_id};
+    </delete>
+
+</mapper>

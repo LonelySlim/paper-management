@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pm.papermanagement.mapper.PaperMapper">
+
+    <resultMap id="paper_map" type="com.pm.papermanagement.common.entity.Paper">
+        <id column="id" property="id"/>
+        <result column="library_id" property="library_id"/>
+        <result column="title" property="title"/>
+        <result column="authors" property="authors"/>
+        <result column="publisher" property="publisher"/>
+        <result column="year" property="year"/>
+        <result column="source" property="source"/>
+    </resultMap>
+
+    <insert id="addPaper">
+        insert into paper(library_id,title)
+        values (#{library_id} ,#{title})
+    </insert>
+
+    <select id="selectPaperByTitle" resultMap="paper_map">
+        select *
+        from paper
+        where title = #{title}
+    </select>
+
+    <select id="selectPaperBySequence" resultMap="paper_map">
+        select *
+        from paper_management.paper
+        where library_id = #{library_id}
+        limit #{start} , #{offset};
+    </select>
+
+    <select id="selectPaperBySequenceAndTitle" resultMap="paper_map">
+        select *
+        from paper_management.paper
+        where title = #{title} and library_id = #{library_id}
+        limit #{start} , #{offset};
+    </select>
+
+    <update id="modifyTitleById">
+        update paper
+        set title = #{title}
+        where id = #{paper_id}
+    </update>
+    <update id="releaseSourceByID">
+        update paper
+        set source = #{source}
+        where id = #{paper_id}
+    </update>
+
+    <delete id="deletePaperById">
+        delete from paper
+        where id = #{paper_id};
+    </delete>
+
+    <select id="selectPaperById" resultMap="paper_map">
+        select *
+        from paper_management.paper
+        where id = #{paper_id};
+    </select>
+
+</mapper>

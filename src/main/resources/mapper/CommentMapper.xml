@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pm.papermanagement.mapper.CommentMapper">
+    <resultMap id="content_map" type="com.pm.papermanagement.common.entity.Comment">
+        <id column="id" property="id"/>
+        <result column="paper_id" property="paper_id"/>
+        <result column="content" property="content"/>
+        <result column="time" property="time"/>
+    </resultMap>
+    <insert id="addComment">
+        insert into paper_management.comment(content,paper_id,time)
+        values (#{content},#{paper_id},CURRENT_TIMESTAMP)
+    </insert>
+    <delete id="deleteCommentById">
+        delete
+        from paper_management.comment
+        where id = #{comment_id}
+    </delete>
+    <select id="selectCommentByContent" resultType="com.pm.papermanagement.common.entity.Comment">
+        select *
+        from paper_management.comment
+        where content = #{content}
+    </select>
+    <select id="selectCommentBySequence" resultType="com.pm.papermanagement.common.entity.Comment">
+        select *
+        from paper_management.comment
+        limit #{start} , #{offset}
+    </select>
+</mapper>

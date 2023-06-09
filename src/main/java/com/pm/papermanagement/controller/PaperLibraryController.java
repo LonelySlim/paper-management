@@ -13,6 +13,7 @@ import com.pm.papermanagement.common.model.param.TopicParam;
 import com.pm.papermanagement.mapper.PaperLibraryMapper;
 import com.pm.papermanagement.mapper.PaperMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
 import org.apache.tomcat.jni.Library;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -44,6 +45,9 @@ public class PaperLibraryController {
 
     @PostMapping(value = "/api/library", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ReturnValue addPaperLibrary(@RequestBody PaperLibraryParam paperLibraryParam) {
+//        if(!SecurityUtils.getSubject().isAuthenticated()){
+//            return ReturnValue.generate("101","未登陆",null);
+//        }
         if (ObjectUtils.isEmpty(paperLibraryParam.getTopic())) {
             throw new BizException("topic不能为空");
         }

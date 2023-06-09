@@ -10,6 +10,7 @@ import com.pm.papermanagement.common.model.param.*;
 import com.pm.papermanagement.mapper.PaperMapper;
 import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.util.ObjectUtils;
@@ -35,6 +36,11 @@ public class PaperController {
 
     @PostMapping(value = "/api/paper", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ReturnValue addPaper(@RequestBody PaperParam paperParam){
+//        if(!SecurityUtils.getSubject().isAuthenticated()){
+//            System.out.println("未登录：" + SecurityUtils.getSubject().getPrincipal());
+//            return ReturnValue.generate("101","未登陆",null);
+//        }
+        //System.out.println(SecurityUtils.getSubject().getPrincipal().toString());
         if(ObjectUtils.isEmpty(paperParam.getTitle())){
             throw new BizException("Title不能为空");
         }

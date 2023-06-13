@@ -8,13 +8,15 @@ import java.util.List;
 
 @Mapper
 public interface CommentMapper {
-    void addComment(CommentParam commentParam);
+    void addComment(String content,int paper_id,String owner);
 
     Comment selectCommentByContent(String content);
 
-    List<Comment> selectCommentBySequence(int start, int offset);
+    List<Comment> selectCommentBySequence(int start, int offset,int paper_id);
 
     void deleteCommentById(int comment_id);
 
-    //Comment selectCommentById(int i);
+    Comment selectCommentById(int comment_id);
+
+    int getCommentNum(int paper_id);
 }

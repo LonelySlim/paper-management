@@ -5,7 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.io.StringReader;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class PaperLibrary implements Serializable {
@@ -13,36 +15,5 @@ public class PaperLibrary implements Serializable {
     String topic;
     String desc;
     String isPublic;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getTopic() {
-        return topic;
-    }
-
-    public void setTopic(String topic) {
-        this.topic = topic;
-    }
-
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
-    public String getIsPublic() {
-        return isPublic;
-    }
-
-    public void setIsPublic(String isPublic) {
-        this.isPublic = isPublic;
-    }
+    String owner;
 }

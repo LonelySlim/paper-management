@@ -10,8 +10,4 @@ mybatis:
         map-underscore-to-camel-case: true
     mapper-locations: classpath*:/mapper/*.xml
 
-shiro:
-    sessionManager:
-        sessionIdCookieEnabled: true
-    loginUrl: /api/user/login
 

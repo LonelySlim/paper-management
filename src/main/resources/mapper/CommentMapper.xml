@@ -9,8 +9,8 @@
         <result column="time" property="time"/>
     </resultMap>
     <insert id="addComment">
-        insert into paper_management.comment(content,paper_id,time)
-        values (#{content},#{paper_id},CURRENT_TIMESTAMP)
+        insert into paper_management.comment(content,paper_id,time,owner)
+        values (#{content},#{paper_id},CURRENT_TIMESTAMP,#{owner})
     </insert>
     <delete id="deleteCommentById">
         delete
@@ -25,6 +25,17 @@
     <select id="selectCommentBySequence" resultType="com.pm.papermanagement.common.entity.Comment">
         select *
         from paper_management.comment
+        where paper_id = #{paper_id}
         limit #{start} , #{offset}
+    </select>
+    <select id="selectCommentById" resultType="com.pm.papermanagement.common.entity.Comment">
+        select *
+        from  paper_management.comment
+        where id = #{comment_id}
+    </select>
+    <select id="getCommentNum" resultType="java.lang.Integer">
+        select count(*)
+        from paper_management.comment
+        where paper_id = #{paper_id}
     </select>
 </mapper>

@@ -18,4 +18,5 @@ public class Paper implements Serializable {
     String publisher;
     int year;
     String source;
+    String owner;
 }

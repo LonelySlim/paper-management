@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper
 public interface PaperMapper {
 
-    int addPaper(PaperParam paperParam);
+    int addPaper(int library_id,String title,String owner);
 
     Paper selectPaperByTitle(String title);
 
@@ -20,9 +20,17 @@ public interface PaperMapper {
 
     void modifyTitleById(int paper_id, String title);
 
+    void modifyAuthorsById(int paper_id,String authors);
+
+    void modifyPublisherById(int paper_id,String publisher);
+
+    void modifyYearById(int paper_id,int year);
+
     void deletePaperById(int paper_id);
 
     Paper selectPaperById(int paper_id);
 
     void releaseSourceByID(String source, int paper_id);
+
+    int getPaperNum(int library_id);
 }

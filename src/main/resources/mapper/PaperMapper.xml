@@ -14,8 +14,8 @@
     </resultMap>
 
     <insert id="addPaper">
-        insert into paper(library_id,title)
-        values (#{library_id} ,#{title})
+        insert into paper(library_id,title,owner)
+        values (#{library_id} ,#{title},#{owner})
     </insert>
 
     <select id="selectPaperByTitle" resultMap="paper_map">
@@ -48,6 +48,21 @@
         set source = #{source}
         where id = #{paper_id}
     </update>
+    <update id="modifyAuthorsById">
+        update paper
+        set authors = #{authors}
+        where id = #{paper_id}
+    </update>
+    <update id="modifyPublisherById">
+        update paper
+        set publisher = #{publisher}
+        where id = #{paper_id}
+    </update>
+    <update id="modifyYearById">
+        update paper
+        set year = #{year}
+        where id = #{paper_id}
+    </update>
 
     <delete id="deletePaperById">
         delete from paper
@@ -58,6 +73,11 @@
         select *
         from paper_management.paper
         where id = #{paper_id};
+    </select>
+    <select id="getPaperNum" resultType="java.lang.Integer">
+        select count(*)
+        from paper_management.paper
+        where library_id = #{library_id}
     </select>
 
 </mapper>

@@ -9,4 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TitleParam {
     String title;
+    String authors;
+    String publisher;
+    int year;
 }

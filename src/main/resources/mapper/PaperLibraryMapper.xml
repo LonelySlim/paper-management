@@ -10,8 +10,8 @@
     </resultMap>
 
     <insert id="addPaperLibrary">
-        insert into paper_library(topic, `desc`, is_public)
-        values (#{topic}, #{desc}, #{is_public})
+        insert into paper_library(topic, `desc`, is_public, owner)
+        values (#{topic}, #{desc}, #{is_public},#{owner})
     </insert>
 
     <select id="selectPaperLibraryByTopic" resultMap="paper_library_map">
@@ -29,19 +29,35 @@
     <select id="selectPaperLibraryBySequence" resultMap="paper_library_map">
         select *
         from paper_management.paper_library
+        where owner = #{owner} or is_public = 'true'
         limit #{start} , #{offset};
     </select>
 
     <select id="selectPaperLibraryBySequenceAndTopic" resultMap="paper_library_map">
         select *
         from paper_management.paper_library
-        where topic = #{topic}
+        where topic = #{topic} and (owner = #{owner} or is_public = 'true')
         limit #{start} , #{offset};
+    </select>
+    <select id="getLibraryNum" resultType="java.lang.Integer">
+        select count(*)
+        from paper_management.paper_library
+        where owner = #{owner} or is_public = 'true'
     </select>
 
     <update id="modifyTopicById">
         update paper_library
         set topic = #{topic}
+        where id = #{library_id}
+    </update>
+    <update id="modifyDescById">
+        update paper_library
+        set `desc` = #{desc}
+        where id = #{library_id}
+    </update>
+    <update id="modifyIsPublicById">
+        update paper_library
+        set is_public = #{is_public}
         where id = #{library_id}
     </update>
 

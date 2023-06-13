@@ -13,9 +13,11 @@ import java.util.List;
 @Data
 public class Papers implements Serializable {
     List<PaperParamOutput> papers;
+    int papernum;
 
-    public Papers(List<Paper> papers){
+    public Papers(List<Paper> papers,int paperNum){
         this.papers = new ArrayList<>();
+        this.papernum = paperNum;
         for (Paper paper:papers
              ) {
             PaperParamOutput paperParamOutput = new PaperParamOutput(paper);

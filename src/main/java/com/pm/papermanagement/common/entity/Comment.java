@@ -14,4 +14,5 @@ public class Comment implements Serializable {
     String paper_id;
     String content;
     String time;
+    String owner;
 }

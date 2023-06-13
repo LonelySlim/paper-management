@@ -3,6 +3,7 @@ package com.pm.papermanagement.config;
 import com.pm.papermanagement.realm.MyRealm;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -17,24 +18,14 @@ import java.util.Map;
 
 @Configuration
 public class ShiroConfig {
-    MyRealm myRealm;
+//    MyRealm myRealm;
+//
+//    @Autowired
+//    public void setMyRealm(MyRealm myRealm){
+//        this.myRealm = myRealm;
+//    }
 
-    @Autowired
-    public void setMyRealm(MyRealm myRealm){
-        this.myRealm = myRealm;
-    }
 
-    @Bean
-    public DefaultWebSecurityManager defaultWebSecurityManager(){
-        DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
-        HashedCredentialsMatcher matcher = new HashedCredentialsMatcher();
-        matcher.setHashAlgorithmName("md5");
-        matcher.setHashIterations(4);
-        myRealm.setCredentialsMatcher(matcher);
-        defaultWebSecurityManager.setRealm(myRealm);
-        SecurityUtils.setSecurityManager(defaultWebSecurityManager);
-        return defaultWebSecurityManager;
-    }
 
 //    @Bean
 //    public DefaultShiroFilterChainDefinition shiroFilterChainDefinition(){
@@ -55,12 +46,32 @@ public class ShiroConfig {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(defaultWebSecurityManager);
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
-        //filterChainDefinitionMap.put("/api/user/login","authc");
-        //filterChainDefinitionMap.put("/api/user/register","anon");
-        //filterChainDefinitionMap.put("/api/user/haha","authc");
+        filterChainDefinitionMap.put("/api/user/login","anon");
+        filterChainDefinitionMap.put("/api/user/register","anon");
+        filterChainDefinitionMap.put("/api/user/haha","anon");
+        filterChainDefinitionMap.put("/**","authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
-        SecurityUtils.setSecurityManager(defaultWebSecurityManager);
+        //SecurityUtils.setSecurityManager(defaultWebSecurityManager);
         return shiroFilterFactoryBean;
+    }
+
+    @Bean
+    public DefaultWebSecurityManager defaultWebSecurityManager(@Qualifier("getRealm") Realm myRealm){
+        DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
+
+        defaultWebSecurityManager.setRealm(myRealm);
+        //SecurityUtils.setSecurityManager(defaultWebSecurityManager);
+        return defaultWebSecurityManager;
+    }
+
+    @Bean
+    public Realm getRealm(){
+        MyRealm myRealm = new MyRealm();
+        HashedCredentialsMatcher matcher = new HashedCredentialsMatcher();
+        matcher.setHashAlgorithmName("md5");
+        matcher.setHashIterations(4);
+        myRealm.setCredentialsMatcher(matcher);
+        return myRealm;
     }
 
 }

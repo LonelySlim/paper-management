@@ -10,4 +10,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class TopicParam implements Serializable {
     String topic;
+    String desc;
+    //String is_public;
 }
